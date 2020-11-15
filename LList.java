@@ -33,6 +33,7 @@ public class LList
 		if(head != null)
 		{
 			head = new LLNode(newNode.getContents(), head);
+			
 		}
 	}
 	
@@ -46,7 +47,7 @@ public class LList
 		current = head;
 		int count = 0;
 		
-		while(current != null)
+		while(current.getNext() != null)
 		{
 			if(count == index)
 			{
