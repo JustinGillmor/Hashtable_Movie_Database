@@ -1,10 +1,10 @@
 /*
  * @author Justin Gillmor
  * 
- * HashTable.java is a data structure that is implemented using an array of LinkedLists
- * each element of the array indicates the hashkey "bin" for the Movies. If there is a
+ * HashTable.java is a data structure that is implemented using an array of LinkedLists.
+ * Each element of the array indicates the hashkey "bin" for the Movies. If there is a
  * collision between two movies with the same hashkey, the linkedlist within the element
- * will add the movie to the list.
+ * will add the movie to the Linkedlist.
  * 
  * Last Updated: 11/10/20
  */
@@ -14,7 +14,7 @@ public class HashTable
 	private LList[] movieArray;
 	private int numOfItems;
 	
-	//default constructor
+	//default constructor and instantiates every linkedlist within the Hashtable
 	public HashTable()
 	{
 		movieArray = new LList[100];
@@ -70,7 +70,8 @@ public class HashTable
 	}
 	
 	/*
-	 * Method remove will take a movie and 
+	 * Method remove will take a movie and probe through the Hashtable of the element
+	 * specified and it will remove the given movie if it is found within the LList
 	 */
 	public Movie remove(Movie movieToRemove)
 	{
@@ -92,7 +93,9 @@ public class HashTable
 	}
 	
 	/*
-	 * 
+	 * Method view is the method that provides the listing operation within the main method.
+	 * It will iterate through each element of the array, and each node within each element, and 
+	 * provide the toString and hashkey for each Movie found.
 	 */
 	public void view()
 	{
@@ -110,7 +113,8 @@ public class HashTable
 	}
 	
 	/*
-	 * 
+	 * numOfItems is a value that is constantly kept track of during the processing
+	 * of the hashtable. This method will return that value. 
 	 */
 	public int numOfElements()
 	{
@@ -118,7 +122,7 @@ public class HashTable
 	}
 	
 	/*
-	 * 
+	 * Returns the LinkedList of the element that is provided
 	 */
 	public LList getLList(int index)
 	{
@@ -126,7 +130,7 @@ public class HashTable
 	}
 	
 	/*
-	 * 
+	 * Returns the size of the Linked list within the array element
 	 */
 	public int LListSize(int arrayIndex)
 	{
@@ -139,7 +143,7 @@ public class HashTable
 	}
 	
 	/*
-	 * 
+	 * returns the array size
 	 */
 	public int size()
 	{
