@@ -4,10 +4,10 @@
  * Project3Main prompts the user for a hashtable size, then it will place all of the movies 
  * within the file into the hashtable using the hashing function. Lastly, the program will 
  * continuously prompt the user for a command in which they can either Add a movie, List all movies, Get a movie,
- * ,show Occupancy, Find a movie, and Quit. After quiting the program it will output the amount of times the get
- * and find commands were used along with the amount of movies searched
+ * , show Occupancy, Find a movie, and Quit. After quiting the program it will output the amount of times the get
+ * and find commands were used along with the amount of movies searched.
  * 
- * Last Updated: 11/10/20
+ * Last Updated: 11/15/20
  */
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ public class Project3Main
 		 */
 		Project3Main mainInstance = new Project3Main();
 		Scanner input = new Scanner(System.in);
-		System.out.print("What is your desired hash table size? ");
+		System.out.print("What is the size of the hash table>> ");
 		int hashTableSize = input.nextInt();
 		HashTable database = new HashTable(hashTableSize);
 		File movieFile = new File("movies");
@@ -57,20 +57,13 @@ public class Project3Main
 	
 		while(quit == false)
 		{
-			System.out.print("Command> ");
+			System.out.print("Command>> ");
 			char command = input.next().charAt(0);
 			
 			//Add operation prompts the user for the movie descriptions and adds to the database
 			if((command == 97) || (command == 65))
 			{
-				System.out.print("Title>\n");
-				input.nextLine();
-				String title = input.nextLine();
-				System.out.print("Year> ");
-				String year = input.next();
-				System.out.print("Running Time> ");
-				String runningTime = input.next();
-				Movie newMovie = new Movie(title, year, runningTime);
+				Movie newMovie = mainInstance.addMoviePrompt();
 				newMovie.setHashKey(mainInstance.findHashKey(newMovie, hashTableSize));
 				database.insert(newMovie);
 				System.out.print("Movie successfully added\nTotal Movies: " + database.numOfElements() + "\n");
@@ -88,7 +81,7 @@ public class Project3Main
 				getCommandCount++;
 				boolean removedOrFound = false;
 				
-				System.out.print("Title> ");
+				System.out.print("Enter Title>> ");
 				input.nextLine();
 				String checkTitle = input.nextLine();
 				Movie check = new Movie(checkTitle, "", "");
@@ -111,7 +104,8 @@ public class Project3Main
 				}
 				if(removedOrFound == false)
 				{
-					System.out.print("Sorry the movie is not within the database\n");
+					System.out.print("Sorry the movie was not found\n");
+					moviesSearched--;
 				}
 			}
 			
@@ -126,7 +120,7 @@ public class Project3Main
 			{
 				findCommandCount++;
 				boolean removedOrFound = false;
-				System.out.print("Title> ");
+				System.out.print("Enter Title>> ");
 				input.nextLine();
 				String checkTitle = input.nextLine();
 				Movie check = new Movie(checkTitle, "", "");
@@ -148,15 +142,16 @@ public class Project3Main
 				}
 				if(removedOrFound == false)
 				{
-					System.out.print("Sorry the movie is not within the database\n");
+					System.out.print("Sorry the movie was not found\n");
+					moviesSearched--;
 				}
 			}
 			
 			//Quit (output counters)
 			if((command == 81) || (command == 113))
 			{
-				System.out.println("Get Commands: " + getCommandCount);
-				System.out.println("Find Commands: " + findCommandCount);
+				System.out.println("Total Get Commands: " + getCommandCount);
+				System.out.println("Total Find Commands: " + findCommandCount);
 				System.out.println("Total movies visited: " + moviesSearched);
 				quit = true;
 			}	
@@ -179,6 +174,23 @@ public class Project3Main
 			 hashValue += letterCode[i];
 		 }
 		 return hashValue % hashTableSize;
+	}
+	
+	/*
+	 * Method addMoviePrompt returns a Movie after prompting the user for the details
+	 */
+	public Movie addMoviePrompt() 
+	{
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter Title>> ");
+		String title = input.nextLine();
+		System.out.print("Enter Year>> ");
+		String year = input.next();
+		System.out.print("Enter Running Time>> ");
+		String runningTime = input.next();
+		Movie newMovie = new Movie(title, year, runningTime);
+		input.close();
+		return newMovie;
 	}
 	
 }
